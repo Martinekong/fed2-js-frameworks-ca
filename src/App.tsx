@@ -54,6 +54,7 @@ function App() {
         cartCount={cartCount}
       />
 
+      <h1 className="text-4xl my-8 max-w-6xl mx-auto">Our Products</h1>
       <Products onAddToCart={handleAddToCart} />
 
       <SlideOver

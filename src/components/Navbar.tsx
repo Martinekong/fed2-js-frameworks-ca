@@ -9,14 +9,9 @@ type NavbarProps = {
 
 function Navbar({ onOpenCart, onOpenFavorite, cartCount }: NavbarProps) {
   return (
-    <nav className="p-8 flex justify-between items-center gap-12">
-      <div className="text-3xl uppercase">Varivo</div>
-      <input
-        type="text"
-        placeholder="Search..."
-        className="p-2 border rounded-xl w-full"
-      />
-      <div className="flex gap-4">
+    <nav className="grid grid-cols-2 justify-between items-center md:grid-cols-4">
+      <div className="text-3xl uppercase tracking-wider">Varivo</div>
+      <div className="flex gap-4 justify-self-end md:order-3">
         <HeaderButton
           name="cart"
           background="bg-[#C6F6BA]"
@@ -25,6 +20,11 @@ function Navbar({ onOpenCart, onOpenFavorite, cartCount }: NavbarProps) {
         />
         <HeaderButton name="favorite" onClick={onOpenFavorite} />
       </div>
+      <input
+        type="text"
+        placeholder="Search..."
+        className="p-2 border rounded-xl w-full col-span-2 mt-4 md:mt-0 md:order-2"
+      />
     </nav>
   );
 }
