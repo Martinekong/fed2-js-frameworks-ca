@@ -1,5 +1,6 @@
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
+import SearchBar from './SearchBar';
 
 type NavbarProps = {
   onOpenCart: () => void;
@@ -20,11 +21,7 @@ function Navbar({ onOpenCart, onOpenFavorite, cartCount }: NavbarProps) {
         />
         <HeaderButton name="favorite" onClick={onOpenFavorite} />
       </div>
-      <input
-        type="text"
-        placeholder="Search..."
-        className="p-2 border rounded-xl w-full col-span-2 mt-4 md:mt-0 md:order-2"
-      />
+      <SearchBar className="col-span-2" />
     </nav>
   );
 }

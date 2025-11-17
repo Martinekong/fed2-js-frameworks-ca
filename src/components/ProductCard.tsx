@@ -59,7 +59,7 @@ export default function ProductCard({
   }
 
   return (
-    <div className="rounded-md shadow-md hover:shadow-lg transition relative">
+    <div className="rounded-md shadow-md hover:shadow-lg transition relative cursor-pointer">
       <img
         src={image}
         alt={title}
@@ -85,9 +85,9 @@ export default function ProductCard({
       </button>
       <div className="p-4 items-center grid grid-cols-3">
         <h2 className="text-lg font-semibold col-span-2">{title}</h2>
-        <p className="font-bold text-right">{price}</p>
+        <p className="font-bold text-right">{price} NOK</p>
         <StarRating rating={rating} />
-        <p className="text-right line-through">{discountedPrice}</p>
+        <p className="text-right line-through">{discountedPrice} NOK</p>
       </div>
     </div>
   );
