@@ -31,7 +31,7 @@ export default function FavoritesPanel() {
               className="h-14 w-14 rounded object-cover"
             />
             <div className="flex-1">
-              <p className="text-sm font-semibold">{item.title}</p>
+              <p className="text-sm font-semibold pb-1">{item.title}</p>
               <p className="text-xs text-grey-500">⭐ {item.rating} / 5</p>
             </div>
             <div className="flex flex-col justify-between">

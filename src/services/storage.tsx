@@ -42,8 +42,6 @@ export function removeFavorite(id: string): FavoriteItem[] {
   return updated;
 }
 
-const CART_KEY = 'cart';
-
 export type CartItem = {
   id: string;
   title: string;
@@ -51,6 +49,8 @@ export type CartItem = {
   image: string;
   qty: number;
 };
+
+const CART_KEY = 'cart';
 
 export function getCart(): CartItem[] {
   try {
@@ -71,5 +71,25 @@ export function addToCart(item: Omit<CartItem, 'qty'>) {
   }
 
   localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  return cart;
+}
+
+function saveCart(cart: CartItem[]) {
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+}
+
+export function updateCartQuantity(id: string, delta: number): CartItem[] {
+  const cart = getCart();
+  const index = cart.findIndex((item) => item.id === id);
+
+  if (index === -1) return cart;
+
+  cart[index].qty += delta;
+
+  if (cart[index].qty <= 0) {
+    cart.splice(index, 1);
+  }
+
+  saveCart(cart);
   return cart;
 }

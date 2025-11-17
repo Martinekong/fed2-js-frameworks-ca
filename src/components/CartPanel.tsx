@@ -1,5 +1,5 @@
-import { getCart, CartItem } from 'services/storage';
 import { useEffect, useState } from 'react';
+import { getCart, CartItem, updateCartQuantity } from 'services/storage';
 
 export default function CartPanel() {
   const [items, setItems] = useState<CartItem[]>([]);
@@ -7,6 +7,11 @@ export default function CartPanel() {
   useEffect(() => {
     setItems(getCart());
   }, []);
+
+  function handleChangeQty(id: string, delta: number) {
+    const updated = updateCartQuantity(id, delta);
+    setItems(updated);
+  }
 
   const total = items.reduce((sum, item) => sum + item.price * item.qty, 0);
 
@@ -16,7 +21,7 @@ export default function CartPanel() {
 
   return (
     <div className="space-y-4">
-      <ul className="space-y-3">
+      <ul className="space-y-4">
         {items.map((item) => (
           <li key={item.id} className="flex gap-3">
             <img
@@ -25,14 +30,32 @@ export default function CartPanel() {
               className="h-14 w-14 rounded object-cover"
             />
             <div className="flex-1">
-              <p className="text-sm font-semibold">{item.title}</p>
+              <p className="text-sm font-semibold pb-1">{item.title}</p>
+
               <p className="text-xs text-gray-500">
                 {item.qty} x {item.price.toFixed(2)} NOK
               </p>
             </div>
-            <p className="text-sm font-bold">
-              {(item.price * item.qty).toFixed(2)} NOK
-            </p>
+            <div className="flex flex-col justify-between">
+              <p className="text-sm font-bold">
+                {(item.price * item.qty).toFixed(2)} NOK
+              </p>
+              <div className="flex gap-2 self-end">
+                <button
+                  onClick={() => handleChangeQty(item.id, -1)}
+                  className="h-6 w-6 rounded border text-center leading-5 hover:bg-gray-100"
+                >
+                  -
+                </button>
+                <span>{item.qty}</span>
+                <button
+                  onClick={() => handleChangeQty(item.id, +1)}
+                  className="h-6 w-6 rounded border text-center leading-5 hover:bg-gray-100"
+                >
+                  +
+                </button>
+              </div>
+            </div>
           </li>
         ))}
       </ul>

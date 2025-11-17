@@ -45,7 +45,7 @@ export default function SlideOver({
           <h2 className="text-lg font-semibold">{title}</h2>
           <button
             onClick={onClose}
-            className="rounded-md p-2 hover:bg-gray-100"
+            className="rounded-md py-2 px-4 hover:bg-gray-100"
             aria-label="Close"
           >
             x
