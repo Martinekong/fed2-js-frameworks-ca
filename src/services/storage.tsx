@@ -36,6 +36,12 @@ export function toggleFavorite(item: FavoriteItem) {
   return !exists;
 }
 
+export function removeFavorite(id: string): FavoriteItem[] {
+  const updated = getFavorites().filter((item) => item.id !== id);
+  localStorage.setItem(FAV_KEY, JSON.stringify(updated));
+  return updated;
+}
+
 const CART_KEY = 'cart';
 
 export type CartItem = {

@@ -21,7 +21,7 @@ function App() {
 
       <SlideOver
         open={openPanel !== null}
-        title={openPanel === 'cart' ? 'Your cart' : 'Favorites'}
+        title={openPanel === 'cart' ? 'Your cart' : 'Your favorites'}
         onClose={() => setOpenPanel(null)}
       >
         {openPanel === 'cart' && <CartPanel />}
