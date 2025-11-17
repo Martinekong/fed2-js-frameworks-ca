@@ -1,6 +1,14 @@
+export type FavoriteItem = {
+  id: string;
+  title: string;
+  price: number;
+  image: string;
+  rating?: number;
+};
+
 const FAV_KEY = 'favorites';
 
-export function getFavorites(): string[] {
+export function getFavorites(): FavoriteItem[] {
   try {
     return JSON.parse(localStorage.getItem(FAV_KEY) || '[]');
   } catch {
@@ -9,14 +17,23 @@ export function getFavorites(): string[] {
 }
 
 export function isFavorite(id: string) {
-  return getFavorites().includes(id);
+  return getFavorites().some((item) => item.id === id);
 }
 
-export function toggleFavorite(id: string) {
-  const favorites = new Set(getFavorites());
-  favorites.has(id) ? favorites.delete(id) : favorites.add(id);
-  localStorage.setItem(FAV_KEY, JSON.stringify([...favorites]));
-  return favorites.has(id);
+export function toggleFavorite(item: FavoriteItem) {
+  const favorites = getFavorites();
+  const exists = favorites.find((fav) => fav.id === item.id);
+
+  let updated;
+
+  if (exists) {
+    updated = favorites.filter((fav) => fav.id !== item.id);
+  } else {
+    updated = [...favorites, item];
+  }
+
+  localStorage.setItem(FAV_KEY, JSON.stringify(updated));
+  return !exists;
 }
 
 const CART_KEY = 'cart';

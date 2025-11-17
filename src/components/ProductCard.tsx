@@ -22,16 +22,20 @@ export default function ProductCard({
   discountedPrice,
   rating,
 }: ProductCardProps) {
-  const [favorite, setFavorites] = useState(() => {
-    isFavorite(id);
-  });
+  const [favorite, setFavorites] = useState(() => isFavorite(id));
 
   useEffect(() => {
     setFavorites(isFavorite(id));
   }, [id]);
 
   function onToggleFavorite() {
-    const nowFavorite = toggleFavorite(id);
+    const nowFavorite = toggleFavorite({
+      id,
+      title,
+      price,
+      image,
+      rating,
+    });
     setFavorites(nowFavorite);
 
     if (nowFavorite) {
