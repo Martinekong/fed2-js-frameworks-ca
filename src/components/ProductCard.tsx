@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { successToast } from 'utils/toast';
 import StarRating from './StarRating';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -46,18 +47,15 @@ export default function ProductCard({
     setFavorites(nowFavorite);
 
     if (nowFavorite) {
-      //Snackbar
-      console.log(`Added "${title}" to favorites`);
+      successToast(`Added "${title}" to favorites`);
     } else {
-      //Snackbar
-      console.log(`Removed "${title}" from favorites`);
+      successToast(`Removed "${title}" from favorites`);
     }
   }
 
   function handleAddToCart() {
     onAddToCart({ id, title, price, image });
-    //Snackbar
-    console.log(`Added 1 "${title}" to cart`);
+    successToast(`Added 1 "${title}" to cart`);
   }
 
   return (
@@ -88,7 +86,6 @@ export default function ProductCard({
       <div className="p-4 items-center grid grid-cols-3">
         <h2 className="text-lg font-semibold col-span-2">{title}</h2>
         <p className="font-bold text-right">{price}</p>
-        {/* <p className="text-xs text-grey-500 col-span-2">⭐ {rating} / 5</p> */}
         <StarRating rating={rating} />
         <p className="text-right line-through">{discountedPrice}</p>
       </div>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getFavorites, FavoriteItem, removeFavorite } from 'services/storage';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { successToast } from 'utils/toast';
 
 export default function FavoritesPanel() {
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
@@ -11,6 +12,7 @@ export default function FavoritesPanel() {
 
   function handleRemove(id: string) {
     const updated = removeFavorite(id);
+    successToast('Item removed from favorites');
     setFavorites(updated);
   }
 

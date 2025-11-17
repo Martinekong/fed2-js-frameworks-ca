@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 import Navbar from 'components/Navbar';
 import SlideOver from 'components/SlideOver';
 import CartPanel from 'components/CartPanel';
@@ -10,6 +11,7 @@ import {
   getCart,
   updateCartQuantity,
 } from 'services/storage';
+import { successToast } from 'utils/toast';
 
 type Panel = 'cart' | 'favorite' | null;
 
@@ -29,12 +31,23 @@ function App() {
   function handleChangeCartQty(id: string, delta: number) {
     const updated = updateCartQuantity(id, delta);
     setCartItems(updated);
+
+    const item = updated.find((i) => i.id === id);
+
+    if (!item) {
+      successToast('Removed from cart');
+    } else if (delta > 0) {
+      successToast(`Added 1 more ${item.title}`);
+    } else {
+      successToast(`Removed 1 ${item.title}`);
+    }
   }
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.qty, 0);
 
   return (
     <>
+      <Toaster position="bottom-right" />
       <Navbar
         onOpenCart={() => setOpenPanel('cart')}
         onOpenFavorite={() => setOpenPanel('favorite')}
