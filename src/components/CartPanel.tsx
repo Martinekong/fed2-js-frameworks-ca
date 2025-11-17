@@ -1,18 +1,11 @@
-import { useEffect, useState } from 'react';
-import { getCart, CartItem, updateCartQuantity } from 'services/storage';
+import { CartItem } from 'services/storage';
 
-export default function CartPanel() {
-  const [items, setItems] = useState<CartItem[]>([]);
+type CartPanelProps = {
+  items: CartItem[];
+  onChangeQty: (id: string, delta: number) => void;
+};
 
-  useEffect(() => {
-    setItems(getCart());
-  }, []);
-
-  function handleChangeQty(id: string, delta: number) {
-    const updated = updateCartQuantity(id, delta);
-    setItems(updated);
-  }
-
+export default function CartPanel({ items, onChangeQty }: CartPanelProps) {
   const total = items.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   if (items.length === 0) {
@@ -31,7 +24,6 @@ export default function CartPanel() {
             />
             <div className="flex-1">
               <p className="text-sm font-semibold pb-1">{item.title}</p>
-
               <p className="text-xs text-gray-500">
                 {item.qty} x {item.price.toFixed(2)} NOK
               </p>
@@ -42,14 +34,14 @@ export default function CartPanel() {
               </p>
               <div className="flex gap-2 self-end">
                 <button
-                  onClick={() => handleChangeQty(item.id, -1)}
+                  onClick={() => onChangeQty(item.id, -1)}
                   className="h-6 w-6 rounded border text-center leading-5 hover:bg-gray-100"
                 >
                   -
                 </button>
                 <span>{item.qty}</span>
                 <button
-                  onClick={() => handleChangeQty(item.id, +1)}
+                  onClick={() => onChangeQty(item.id, +1)}
                   className="h-6 w-6 rounded border text-center leading-5 hover:bg-gray-100"
                 >
                   +

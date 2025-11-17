@@ -3,15 +3,21 @@ import StarRating from './StarRating';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
-import { addToCart, isFavorite, toggleFavorite } from 'services/storage';
+import { isFavorite, toggleFavorite } from 'services/storage';
 
 type ProductCardProps = {
   id: string;
   image: string;
   title: string;
   price: number;
-  discountedPrice: number;
+  discountedPrice: number | null;
   rating: number;
+  onAddToCart: (item: {
+    id: string;
+    title: string;
+    price: number;
+    image: string;
+  }) => void;
 };
 
 export default function ProductCard({
@@ -21,6 +27,7 @@ export default function ProductCard({
   price,
   discountedPrice,
   rating,
+  onAddToCart,
 }: ProductCardProps) {
   const [favorite, setFavorites] = useState(() => isFavorite(id));
 
@@ -47,14 +54,14 @@ export default function ProductCard({
     }
   }
 
-  function onAddToCart() {
-    addToCart({ id, title, price, image });
+  function handleAddToCart() {
+    onAddToCart({ id, title, price, image });
     //Snackbar
     console.log(`Added 1 "${title}" to cart`);
   }
 
   return (
-    <div className="rounded-md shadow-sm hover:shadow-md transition relative">
+    <div className="rounded-md shadow-md hover:shadow-lg transition relative">
       <img
         src={image}
         alt={title}
@@ -72,15 +79,16 @@ export default function ProductCard({
         )}
       </button>
       <button
-        onClick={onAddToCart}
-        aria-label="Add to basket"
+        onClick={handleAddToCart}
+        aria-label="Add to cart"
         className="absolute right-0 top-0 rounded-tr-md rounded-bl-md bg-[#C6F6BA] p-2 shadow-lg"
       >
         <LocalMallOutlinedIcon />
       </button>
-      <div className="p-4 items-center grid grid-cols-2">
-        <h2 className="text-lg font-semibold">{title}</h2>
+      <div className="p-4 items-center grid grid-cols-3">
+        <h2 className="text-lg font-semibold col-span-2">{title}</h2>
         <p className="font-bold text-right">{price}</p>
+        {/* <p className="text-xs text-grey-500 col-span-2">⭐ {rating} / 5</p> */}
         <StarRating rating={rating} />
         <p className="text-right line-through">{discountedPrice}</p>
       </div>

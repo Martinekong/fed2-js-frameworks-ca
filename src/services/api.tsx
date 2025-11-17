@@ -1,10 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProductCard from 'components/ProductCard';
 
 const url = 'https://v2.api.noroff.dev/online-shop';
 
-export default function Products() {
-  const [products, setProducts] = useState([]);
+type Product = {
+  id: string;
+  title: string;
+  price: number;
+  discountedPrice: number;
+  rating: number;
+  image: {
+    url: string;
+  };
+};
+
+type ProductsProps = {
+  onAddToCart: (item: {
+    id: string;
+    title: string;
+    price: number;
+    image: string;
+  }) => void;
+};
+
+export default function Products({ onAddToCart }: ProductsProps) {
+  const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -27,16 +47,12 @@ export default function Products() {
     getData();
   }, []);
 
-  if (isLoading) {
-    return <div>Loading products...</div>;
-  }
+  if (isLoading) return <div>Loading products...</div>;
 
-  if (isError) {
-    return <div>Error loading products</div>;
-  }
+  if (isError) return <div>Error loading products</div>;
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mx-8 gap-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-8">
       {products.map((product) => (
         <ProductCard
           key={product.id}
@@ -52,6 +68,7 @@ export default function Products() {
             product.discountedPrice === product.price ? null : product.price
           }
           rating={product.rating}
+          onAddToCart={onAddToCart}
         />
       ))}
     </div>
