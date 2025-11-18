@@ -1,18 +1,18 @@
 import { useEffect } from 'react';
 
-type SlideOverProps = {
+type SidePanelProps = {
   open: boolean;
   title: string;
   onClose: () => void;
   children: React.ReactNode;
 };
 
-export default function SlideOver({
+export default function SidePanel({
   open,
   title,
   onClose,
   children,
-}: SlideOverProps) {
+}: SidePanelProps) {
   useEffect(() => {
     if (!open) return;
     const handleKey = (event: KeyboardEvent) => {
@@ -30,7 +30,7 @@ export default function SlideOver({
       <div
         onClick={onClose}
         className={`absolute inset-0 bg-black/40 transition-opacity ${
-          open ? "opacity-'100" : 'opacity-0'
+          open ? 'opacity-100' : 'opacity-0'
         }`}
       />
       <aside

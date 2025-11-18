@@ -22,11 +22,11 @@ export default function CartPanel({
     <div className="space-y-4">
       <ul className="space-y-4">
         {items.map((item) => (
-          <li key={item.id}>
+          <li key={item.id} className="hover:opacity-90 flex justify-between">
             <Link
               to={`/product/${item.id}`}
               onClick={onClose}
-              className="flex gap-3 hover:opacity-90"
+              className="flex gap-3 flex-grow"
             >
               <img
                 src={item.image}
@@ -39,27 +39,27 @@ export default function CartPanel({
                   {item.qty} x {item.price.toFixed(2)} NOK
                 </p>
               </div>
-              <div className="flex flex-col justify-between">
-                <p className="text-sm font-bold">
-                  {(item.price * item.qty).toFixed(2)} NOK
-                </p>
-                <div className="flex gap-2 self-end">
-                  <button
-                    onClick={() => onChangeQty(item.id, -1)}
-                    className="h-6 w-6 rounded border text-center leading-5 hover:bg-gray-100"
-                  >
-                    -
-                  </button>
-                  <span>{item.qty}</span>
-                  <button
-                    onClick={() => onChangeQty(item.id, +1)}
-                    className="h-6 w-6 rounded border text-center leading-5 hover:bg-gray-100"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
             </Link>
+            <div className="flex flex-col justify-between">
+              <p className="text-sm font-bold">
+                {(item.price * item.qty).toFixed(2)} NOK
+              </p>
+              <div className="flex gap-2 self-end">
+                <button
+                  onClick={() => onChangeQty(item.id, -1)}
+                  className="h-6 w-6 rounded border text-center leading-5 hover:bg-gray-100"
+                >
+                  -
+                </button>
+                <span>{item.qty}</span>
+                <button
+                  onClick={() => onChangeQty(item.id, +1)}
+                  className="h-6 w-6 rounded border text-center leading-5 hover:bg-gray-100"
+                >
+                  +
+                </button>
+              </div>
+            </div>
           </li>
         ))}
       </ul>

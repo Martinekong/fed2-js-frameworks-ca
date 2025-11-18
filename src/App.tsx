@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { successToast } from 'utils/toast';
+
 import Navbar from 'components/Navbar';
-import SlideOver from 'components/SlideOver';
+import SidePanel from 'components/SidePanel';
 import CartPanel from 'components/CartPanel';
 import FavoritesPanel from 'components/FavoritesPanel';
-import { CartItem, getCart, updateCartQuantity } from 'services/storage';
 import Footer from 'components/Footer';
+
+import { CartItem, getCart, updateCartQuantity } from 'services/storage';
 
 import HomePage from 'pages/Home';
 import ProductPage from 'pages/ProductDetails';
@@ -48,7 +50,7 @@ function App() {
         cartCount={cartCount}
       />
 
-      <SlideOver
+      <SidePanel
         open={openPanel !== null}
         title={openPanel === 'cart' ? 'Your cart' : 'Your favorites'}
         onClose={() => setOpenPanel(null)}
@@ -60,10 +62,11 @@ function App() {
             onClose={() => setOpenPanel(null)}
           />
         )}
+
         {openPanel === 'favorite' && (
           <FavoritesPanel onClose={() => setOpenPanel(null)} />
         )}
-      </SlideOver>
+      </SidePanel>
 
       <main className="flex-grow">
         <Routes>
