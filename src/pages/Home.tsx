@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import HeroSection from 'components/HeroSection';
-import Products from 'services/api';
+import Products from 'services/allProducts';
 import { CartItem, addToCart } from 'services/storage';
 
 export default function HomePage() {

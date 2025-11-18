@@ -47,7 +47,7 @@ export default function FavoritesPanel({ onClose }: FavoritePanelProps) {
               />
               <div className="flex-1">
                 <p className="text-sm font-semibold pb-1">{item.title}</p>
-                <p className="text-xs text-grey-500">⭐ {item.rating} / 5</p>
+                <p className="text-xs">⭐ {item.rating} / 5</p>
               </div>
             </Link>
 
