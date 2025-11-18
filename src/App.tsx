@@ -13,6 +13,7 @@ import {
 } from 'services/storage';
 import { successToast } from 'utils/toast';
 import HeroSection from 'components/HeroSection';
+import Footer from 'components/Footer';
 
 type Panel = 'cart' | 'favorite' | null;
 
@@ -48,30 +49,38 @@ function App() {
 
   return (
     <>
-      <Toaster position="bottom-right" />
-      <Navbar
-        onOpenCart={() => setOpenPanel('cart')}
-        onOpenFavorite={() => setOpenPanel('favorite')}
-        cartCount={cartCount}
-      />
+      <header>
+        <Toaster position="bottom-right" />
+        <Navbar
+          onOpenCart={() => setOpenPanel('cart')}
+          onOpenFavorite={() => setOpenPanel('favorite')}
+          cartCount={cartCount}
+        />
 
-      <HeroSection />
+        <SlideOver
+          open={openPanel !== null}
+          title={openPanel === 'cart' ? 'Your cart' : 'Your favorites'}
+          onClose={() => setOpenPanel(null)}
+        >
+          {openPanel === 'cart' && (
+            <CartPanel items={cartItems} onChangeQty={handleChangeCartQty} />
+          )}
+          {openPanel === 'favorite' && <FavoritesPanel />}
+        </SlideOver>
+      </header>
 
-      <h1 id="products" className="text-4xl my-8 max-w-6xl mx-auto">
-        Our Products
-      </h1>
-      <Products onAddToCart={handleAddToCart} />
+      <main>
+        <HeroSection />
 
-      <SlideOver
-        open={openPanel !== null}
-        title={openPanel === 'cart' ? 'Your cart' : 'Your favorites'}
-        onClose={() => setOpenPanel(null)}
-      >
-        {openPanel === 'cart' && (
-          <CartPanel items={cartItems} onChangeQty={handleChangeCartQty} />
-        )}
-        {openPanel === 'favorite' && <FavoritesPanel />}
-      </SlideOver>
+        <h1 id="products" className="text-4xl my-8 max-w-6xl mx-auto">
+          Our Products
+        </h1>
+        <Products onAddToCart={handleAddToCart} />
+      </main>
+
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 }

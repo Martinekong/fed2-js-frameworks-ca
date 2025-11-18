@@ -10,7 +10,7 @@ type NavbarProps = {
 
 function Navbar({ onOpenCart, onOpenFavorite, cartCount }: NavbarProps) {
   return (
-    <nav className="grid grid-cols-2 justify-between items-center md:grid-cols-4">
+    <nav className="grid grid-cols-2 justify-between items-center md:grid-cols-4 pt-8 px-8">
       <div className="text-3xl uppercase tracking-wider">Varivo</div>
       <div className="flex gap-4 justify-self-end md:order-3">
         <HeaderButton
@@ -44,7 +44,7 @@ function HeaderButton({
   return (
     <button
       onClick={onClick}
-      className={`relative rounded-full p-3 ${background}`}
+      className={`relative rounded-full p-3 ${background} shadow:md hover:shadow-lg transition-shadow cursor-pointer`}
       aria-label={name === 'cart' ? 'Open cart' : 'Open favorites'}
     >
       {name === 'cart' ? <LocalMallOutlinedIcon /> : <FavoriteBorderIcon />}

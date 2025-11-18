@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+main {
   @apply p-8;
 }

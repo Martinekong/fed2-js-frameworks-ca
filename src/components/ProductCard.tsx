@@ -68,7 +68,7 @@ export default function ProductCard({
       <button
         onClick={onToggleFavorite}
         aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}
-        className="absolute left-0 top-0 bg-white p-2 shadow-lg rounded-tl-md rounded-br-md"
+        className="absolute left-0 top-0 bg-white p-2 shadow-lg rounded-tl-md rounded-br-md transition-transform hover:scale-110"
       >
         {favorite ? (
           <FavoriteIcon className="text-pink-300" />
@@ -79,7 +79,7 @@ export default function ProductCard({
       <button
         onClick={handleAddToCart}
         aria-label="Add to cart"
-        className="absolute right-0 top-0 rounded-tr-md rounded-bl-md bg-[#C6F6BA] p-2 shadow-lg"
+        className="absolute right-0 top-0 rounded-tr-md rounded-bl-md bg-[#C6F6BA] p-2 shadow-lg transition-transform hover:scale-110"
       >
         <LocalMallOutlinedIcon />
       </button>
