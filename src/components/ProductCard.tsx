@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { successToast } from 'utils/toast';
 import StarRating from './StarRating';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -59,36 +60,38 @@ export default function ProductCard({
   }
 
   return (
-    <div className="rounded-md shadow-md hover:shadow-lg transition relative cursor-pointer">
-      <img
-        src={image}
-        alt={title}
-        className="w-full h-48 object-cover rounded-md"
-      />
-      <button
-        onClick={onToggleFavorite}
-        aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}
-        className="absolute left-0 top-0 bg-white p-2 shadow-lg rounded-tl-md rounded-br-md transition-transform hover:scale-110"
-      >
-        {favorite ? (
-          <FavoriteIcon className="text-pink-300" />
-        ) : (
-          <FavoriteBorderIcon className="text-pink-300" />
-        )}
-      </button>
-      <button
-        onClick={handleAddToCart}
-        aria-label="Add to cart"
-        className="absolute right-0 top-0 rounded-tr-md rounded-bl-md bg-[#C6F6BA] p-2 shadow-lg transition-transform hover:scale-110"
-      >
-        <LocalMallOutlinedIcon />
-      </button>
-      <div className="p-4 items-center grid grid-cols-3">
-        <h2 className="text-lg font-semibold col-span-2">{title}</h2>
-        <p className="font-bold text-right">{price} NOK</p>
-        <StarRating rating={rating} />
-        <p className="text-right line-through">{discountedPrice} NOK</p>
+    <Link to={`/product/${id}`}>
+      <div className="rounded-md shadow-md hover:shadow-lg transition relative cursor-pointer">
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-48 object-cover rounded-md"
+        />
+        <button
+          onClick={onToggleFavorite}
+          aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}
+          className="absolute left-0 top-0 bg-white p-2 shadow-lg rounded-tl-md rounded-br-md transition-transform hover:scale-110"
+        >
+          {favorite ? (
+            <FavoriteIcon className="text-pink-300" />
+          ) : (
+            <FavoriteBorderIcon className="text-pink-300" />
+          )}
+        </button>
+        <button
+          onClick={handleAddToCart}
+          aria-label="Add to cart"
+          className="absolute right-0 top-0 rounded-tr-md rounded-bl-md bg-[#C6F6BA] p-2 shadow-lg transition-transform hover:scale-110"
+        >
+          <LocalMallOutlinedIcon />
+        </button>
+        <div className="p-4 items-center grid grid-cols-3">
+          <h2 className="text-lg font-semibold col-span-2">{title}</h2>
+          <p className="font-bold text-right">{price} NOK</p>
+          <StarRating rating={rating} />
+          <p className="text-right line-through">{discountedPrice} NOK</p>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }

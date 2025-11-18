@@ -1,19 +1,16 @@
 import { useEffect, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import { successToast } from 'utils/toast';
 import Navbar from 'components/Navbar';
 import SlideOver from 'components/SlideOver';
 import CartPanel from 'components/CartPanel';
 import FavoritesPanel from 'components/FavoritesPanel';
-import Products from 'services/api';
-import {
-  addToCart,
-  CartItem,
-  getCart,
-  updateCartQuantity,
-} from 'services/storage';
-import { successToast } from 'utils/toast';
-import HeroSection from 'components/HeroSection';
+import { CartItem, getCart, updateCartQuantity } from 'services/storage';
 import Footer from 'components/Footer';
+
+import HomePage from 'pages/Home';
+import ProductPage from 'pages/ProductDetails';
 
 type Panel = 'cart' | 'favorite' | null;
 
@@ -24,11 +21,6 @@ function App() {
   useEffect(() => {
     setCartItems(getCart());
   }, []);
-
-  function handleAddToCart(item: Omit<CartItem, 'qty'>) {
-    const updated = addToCart(item);
-    setCartItems(updated);
-  }
 
   function handleChangeCartQty(id: string, delta: number) {
     const updated = updateCartQuantity(id, delta);
@@ -48,40 +40,34 @@ function App() {
   const cartCount = cartItems.reduce((sum, item) => sum + item.qty, 0);
 
   return (
-    <>
-      <header>
-        <Toaster position="bottom-right" />
-        <Navbar
-          onOpenCart={() => setOpenPanel('cart')}
-          onOpenFavorite={() => setOpenPanel('favorite')}
-          cartCount={cartCount}
-        />
+    <div className="min-h-screen flex flex-col">
+      <Toaster position="bottom-right" />
+      <Navbar
+        onOpenCart={() => setOpenPanel('cart')}
+        onOpenFavorite={() => setOpenPanel('favorite')}
+        cartCount={cartCount}
+      />
 
-        <SlideOver
-          open={openPanel !== null}
-          title={openPanel === 'cart' ? 'Your cart' : 'Your favorites'}
-          onClose={() => setOpenPanel(null)}
-        >
-          {openPanel === 'cart' && (
-            <CartPanel items={cartItems} onChangeQty={handleChangeCartQty} />
-          )}
-          {openPanel === 'favorite' && <FavoritesPanel />}
-        </SlideOver>
-      </header>
+      <SlideOver
+        open={openPanel !== null}
+        title={openPanel === 'cart' ? 'Your cart' : 'Your favorites'}
+        onClose={() => setOpenPanel(null)}
+      >
+        {openPanel === 'cart' && (
+          <CartPanel items={cartItems} onChangeQty={handleChangeCartQty} />
+        )}
+        {openPanel === 'favorite' && <FavoritesPanel />}
+      </SlideOver>
 
-      <main>
-        <HeroSection />
-
-        <h1 id="products" className="text-4xl my-8 max-w-6xl mx-auto">
-          Our Products
-        </h1>
-        <Products onAddToCart={handleAddToCart} />
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/product/:id" element={<ProductPage />} />
+        </Routes>
       </main>
 
-      <footer>
-        <Footer />
-      </footer>
-    </>
+      <Footer />
+    </div>
   );
 }
 

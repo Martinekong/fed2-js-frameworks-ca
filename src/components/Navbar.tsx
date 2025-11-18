@@ -1,6 +1,7 @@
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import SearchBar from './SearchBar';
+import { Link } from 'react-router-dom';
 
 type NavbarProps = {
   onOpenCart: () => void;
@@ -11,7 +12,9 @@ type NavbarProps = {
 function Navbar({ onOpenCart, onOpenFavorite, cartCount }: NavbarProps) {
   return (
     <nav className="grid grid-cols-2 justify-between items-center md:grid-cols-4 pt-8 px-8">
-      <div className="text-3xl uppercase tracking-wider">Varivo</div>
+      <Link to={`/`} className="text-3xl uppercase tracking-wider">
+        varivo
+      </Link>
       <div className="flex gap-4 justify-self-end md:order-3">
         <HeaderButton
           name="cart"
