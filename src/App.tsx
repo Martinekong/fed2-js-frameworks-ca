@@ -12,6 +12,7 @@ import {
   updateCartQuantity,
 } from 'services/storage';
 import { successToast } from 'utils/toast';
+import HeroSection from 'components/HeroSection';
 
 type Panel = 'cart' | 'favorite' | null;
 
@@ -54,7 +55,11 @@ function App() {
         cartCount={cartCount}
       />
 
-      <h1 className="text-4xl my-8 max-w-6xl mx-auto">Our Products</h1>
+      <HeroSection />
+
+      <h1 id="products" className="text-4xl my-8 max-w-6xl mx-auto">
+        Our Products
+      </h1>
       <Products onAddToCart={handleAddToCart} />
 
       <SlideOver

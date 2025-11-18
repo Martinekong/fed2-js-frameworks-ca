@@ -83,7 +83,7 @@ export default function SearchBar({ className = '' }: SearchBarProps) {
         />
 
         <SearchIcon
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+          className="absolute right-3 top-9 md:top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
           fontSize="small"
         />
       </div>
