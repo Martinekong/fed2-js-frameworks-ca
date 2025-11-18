@@ -54,9 +54,15 @@ function App() {
         onClose={() => setOpenPanel(null)}
       >
         {openPanel === 'cart' && (
-          <CartPanel items={cartItems} onChangeQty={handleChangeCartQty} />
+          <CartPanel
+            items={cartItems}
+            onChangeQty={handleChangeCartQty}
+            onClose={() => setOpenPanel(null)}
+          />
         )}
-        {openPanel === 'favorite' && <FavoritesPanel />}
+        {openPanel === 'favorite' && (
+          <FavoritesPanel onClose={() => setOpenPanel(null)} />
+        )}
       </SlideOver>
 
       <main className="flex-grow">
