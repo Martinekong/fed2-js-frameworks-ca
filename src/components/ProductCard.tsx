@@ -60,13 +60,23 @@ export default function ProductCard({
   }
 
   return (
-    <Link to={`/product/${id}`}>
+    <>
       <div className="rounded-md shadow-md hover:shadow-lg transition relative cursor-pointer">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-48 object-cover rounded-md"
-        />
+        <Link to={`/product/${id}`}>
+          <img
+            src={image}
+            alt={title}
+            className="w-full h-48 object-cover rounded-md"
+          />
+
+          <div className="p-4 items-center grid grid-cols-3">
+            <h2 className="text-lg font-semibold col-span-2">{title}</h2>
+            <p className="font-bold text-right">{price} NOK</p>
+            <StarRating rating={rating} />
+            <p className="text-right line-through">{discountedPrice} NOK</p>
+          </div>
+        </Link>
+
         <button
           onClick={onToggleFavorite}
           aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}
@@ -85,13 +95,7 @@ export default function ProductCard({
         >
           <LocalMallOutlinedIcon />
         </button>
-        <div className="p-4 items-center grid grid-cols-3">
-          <h2 className="text-lg font-semibold col-span-2">{title}</h2>
-          <p className="font-bold text-right">{price} NOK</p>
-          <StarRating rating={rating} />
-          <p className="text-right line-through">{discountedPrice} NOK</p>
-        </div>
       </div>
-    </Link>
+    </>
   );
 }
