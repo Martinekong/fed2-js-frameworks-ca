@@ -52,21 +52,15 @@ export default function Products({ onAddToCart }: ProductsProps) {
   if (isError) return <div>Error loading products</div>;
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+    <div className="grid max-w-6xl grid-cols-1 gap-8 mx-auto sm:grid-cols-2 lg:grid-cols-3">
       {products.map((product) => (
         <ProductCard
           key={product.id}
           id={product.id}
           title={product.title}
-          price={
-            product.price > product.discountedPrice
-              ? product.discountedPrice
-              : product.price
-          }
           image={product.image.url}
-          discountedPrice={
-            product.discountedPrice === product.price ? null : product.price
-          }
+          price={product.price}
+          discountedPrice={product.discountedPrice}
           rating={product.rating}
           onAddToCart={onAddToCart}
         />

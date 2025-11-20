@@ -59,28 +59,38 @@ export default function ProductCard({
     successToast(`Added 1 "${title}" to cart`);
   }
 
+  const isDiscounted = discountedPrice !== null && discountedPrice < price;
+
+  console.log(isDiscounted);
+
   return (
     <>
-      <div className="rounded-md shadow-md hover:shadow-lg transition relative cursor-pointer">
+      <div className="relative transition rounded-md shadow-md cursor-pointer hover:shadow-lg">
         <Link to={`/product/${id}`}>
           <img
             src={image}
             alt={title}
-            className="w-full h-48 object-cover rounded-md"
+            className="object-cover w-full h-48 rounded-md"
           />
 
-          <div className="p-4 items-center grid grid-cols-3">
-            <h2 className="text-lg font-semibold col-span-2">{title}</h2>
-            <p className="font-bold text-right">{price} NOK</p>
+          <div className="grid items-center grid-cols-3 p-4">
+            <h2 className="col-span-2 text-lg font-semibold">{title}</h2>
+            <p className="font-bold text-right">
+              {isDiscounted ? discountedPrice : price} NOK
+            </p>
             <StarRating rating={rating} />
-            <p className="text-right line-through">{discountedPrice} NOK</p>
+            {isDiscounted && (
+              <p className="text-sm text-right text-gray-500 line-through">
+                {price} NOK
+              </p>
+            )}
           </div>
         </Link>
 
         <button
           onClick={onToggleFavorite}
           aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}
-          className="absolute left-0 top-0 bg-white p-2 shadow-lg rounded-tl-md rounded-br-md transition-transform hover:scale-110"
+          className="absolute top-0 left-0 p-2 transition-transform bg-white shadow-lg rounded-tl-md rounded-br-md hover:scale-110"
         >
           {favorite ? (
             <FavoriteIcon className="text-pink-300" />
