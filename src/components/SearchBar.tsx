@@ -36,6 +36,8 @@ export default function SearchBar({ className = '' }: SearchBarProps) {
     loadProducts();
   }, []);
 
+  console.log(products);
+
   useEffect(() => {
     if (!query.trim()) {
       setFiltered([]);
@@ -118,7 +120,7 @@ export default function SearchBar({ className = '' }: SearchBarProps) {
               >
                 <img
                   src={item.image.url}
-                  alt={item.image.alt}
+                  alt={item.image.alt || item.title}
                   className="object-cover w-16 h-16 rounded-md"
                 />
                 <div>

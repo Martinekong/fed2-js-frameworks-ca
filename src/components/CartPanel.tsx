@@ -22,19 +22,19 @@ export default function CartPanel({
     <div className="space-y-4">
       <ul className="space-y-4">
         {items.map((item) => (
-          <li key={item.id} className="hover:opacity-90 flex justify-between">
+          <li key={item.id} className="flex justify-between hover:opacity-90">
             <Link
               to={`/product/${item.id}`}
               onClick={onClose}
-              className="flex gap-3 flex-grow"
+              className="flex flex-grow gap-3"
             >
               <img
-                src={item.image}
-                alt={item.title}
-                className="h-14 w-14 rounded object-cover"
+                src={item.image.url}
+                alt={item.image.alt || item.title}
+                className="object-cover rounded h-14 w-14"
               />
               <div className="flex-1">
-                <p className="text-sm font-semibold pb-1">{item.title}</p>
+                <p className="pb-1 text-sm font-semibold">{item.title}</p>
                 <p className="text-xs text-gray-500">
                   {item.qty} x {item.price.toFixed(2)} NOK
                 </p>
@@ -44,17 +44,17 @@ export default function CartPanel({
               <p className="text-sm font-bold">
                 {(item.price * item.qty).toFixed(2)} NOK
               </p>
-              <div className="flex gap-2 self-end">
+              <div className="flex self-end gap-2">
                 <button
                   onClick={() => onChangeQty(item.id, -1)}
-                  className="h-6 w-6 rounded border text-center leading-5 hover:bg-gray-100"
+                  className="w-6 h-6 leading-5 text-center border rounded hover:bg-gray-100"
                 >
                   -
                 </button>
                 <span>{item.qty}</span>
                 <button
                   onClick={() => onChangeQty(item.id, +1)}
-                  className="h-6 w-6 rounded border text-center leading-5 hover:bg-gray-100"
+                  className="w-6 h-6 leading-5 text-center border rounded hover:bg-gray-100"
                 >
                   +
                 </button>
@@ -64,7 +64,7 @@ export default function CartPanel({
         ))}
       </ul>
 
-      <div className="flex justify-between border-t pt-3 text-sm font-semibold">
+      <div className="flex justify-between pt-3 text-sm font-semibold border-t">
         <span>Total:</span>
         <span>{total.toFixed(2)} NOK</span>
       </div>

@@ -38,7 +38,10 @@ type ProductPageProps = {
     id: string;
     title: string;
     price: number;
-    image: string;
+    image: {
+      url: string;
+      alt: string;
+    };
   }) => void;
 };
 
@@ -86,7 +89,7 @@ export default function Product({ onAddToCart }: ProductPageProps) {
       id: product.id,
       title: product.title,
       price: priceToUse,
-      image: product.image.url,
+      image: product.image,
       rating: product.rating,
     });
 
@@ -119,7 +122,7 @@ export default function Product({ onAddToCart }: ProductPageProps) {
       id: product.id,
       title: product.title,
       price: priceToUse,
-      image: product.image.url,
+      image: product.image,
     });
 
     successToast(`Added 1 "${product.title}" to cart`);
@@ -134,7 +137,7 @@ export default function Product({ onAddToCart }: ProductPageProps) {
 
       <img
         src={product.image.url}
-        alt={product.image.alt}
+        alt={product.image.alt || product.title}
         className="object-cover w-full rounded h-80 md:row-span-3"
       />
 

@@ -33,20 +33,20 @@ export default function FavoritesPanel({ onClose }: FavoritePanelProps) {
         {favorites.map((item) => (
           <li
             key={item.id}
-            className="flex justify-between border-b pb-2 hover:opacity-90"
+            className="flex justify-between pb-2 border-b hover:opacity-90"
           >
             <Link
               to={`/product/${item.id}`}
               onClick={onClose}
-              className="flex gap-3 flex-grow"
+              className="flex flex-grow gap-3"
             >
               <img
-                src={item.image}
-                alt={item.title}
-                className="h-14 w-14 rounded object-cover"
+                src={item.image.url}
+                alt={item.image.alt || item.title}
+                className="object-cover rounded h-14 w-14"
               />
               <div className="flex-1">
-                <p className="text-sm font-semibold pb-1">{item.title}</p>
+                <p className="pb-1 text-sm font-semibold">{item.title}</p>
                 <p className="text-xs">⭐ {item.rating} / 5</p>
               </div>
             </Link>
@@ -55,7 +55,7 @@ export default function FavoritesPanel({ onClose }: FavoritePanelProps) {
               <p className="text-sm font-bold">{item.price.toFixed(2)} NOK</p>
               <button
                 onClick={() => handleRemove(item.id)}
-                className="flex items-center gap-1 rounded-full px-2 py-1 text-xs hover:bg-red-50 self-end"
+                className="flex items-center self-end gap-1 px-2 py-1 text-xs rounded-full hover:bg-red-50"
                 aria-label={`Remove ${item.title} from favorites`}
               >
                 <FavoriteIcon fontSize="small" className="text-pink-300" />

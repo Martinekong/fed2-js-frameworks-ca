@@ -9,7 +9,10 @@ import { isFavorite, toggleFavorite } from 'services/storage';
 
 type ProductCardProps = {
   id: string;
-  image: string;
+  image: {
+    url: string;
+    alt: string;
+  };
   title: string;
   price: number;
   discountedPrice: number | null;
@@ -18,7 +21,10 @@ type ProductCardProps = {
     id: string;
     title: string;
     price: number;
-    image: string;
+    image: {
+      url: string;
+      alt: string;
+    };
   }) => void;
 };
 
@@ -61,15 +67,13 @@ export default function ProductCard({
 
   const isDiscounted = discountedPrice !== null && discountedPrice < price;
 
-  console.log(isDiscounted);
-
   return (
     <>
       <div className="relative transition rounded-md shadow-md cursor-pointer hover:shadow-lg">
         <Link to={`/product/${id}`}>
           <img
-            src={image}
-            alt={title}
+            src={image.url}
+            alt={image.alt || title}
             className="object-cover w-full h-48 rounded-md"
           />
 

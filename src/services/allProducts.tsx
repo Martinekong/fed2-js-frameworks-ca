@@ -11,6 +11,7 @@ type Product = {
   rating: number;
   image: {
     url: string;
+    alt: string;
   };
 };
 
@@ -19,7 +20,10 @@ type ProductsProps = {
     id: string;
     title: string;
     price: number;
-    image: string;
+    image: {
+      url: string;
+      alt: string;
+    };
   }) => void;
 };
 
@@ -58,7 +62,7 @@ export default function Products({ onAddToCart }: ProductsProps) {
           key={product.id}
           id={product.id}
           title={product.title}
-          image={product.image.url}
+          image={product.image}
           price={product.price}
           discountedPrice={product.discountedPrice}
           rating={product.rating}

@@ -5,7 +5,10 @@ type ProductPageProps = {
     id: string;
     title: string;
     price: number;
-    image: string;
+    image: {
+      url: string;
+      alt: string;
+    };
   }) => void;
 };
 
