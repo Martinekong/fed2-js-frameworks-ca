@@ -46,6 +46,7 @@ export default function Product({ onAddToCart }: ProductPageProps) {
   const [product, setProduct] = useState<SingleProduct | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [favorite, setFavorite] = useState(false);
 
   const { id } = useParams();
 
@@ -67,6 +68,36 @@ export default function Product({ onAddToCart }: ProductPageProps) {
 
     getData();
   }, [id]);
+
+  useEffect(() => {
+    if (!product) return;
+    setFavorite(isFavorite(product.id));
+  }, [product]);
+
+  function handleToggleFavorite() {
+    if (!product) return;
+
+    const priceToUse =
+      product.discountedPrice < product.price
+        ? product.discountedPrice
+        : product.price;
+
+    const nowFavorite = toggleFavorite({
+      id: product.id,
+      title: product.title,
+      price: priceToUse,
+      image: product.image.url,
+      rating: product.rating,
+    });
+
+    setFavorite(nowFavorite);
+
+    if (nowFavorite) {
+      successToast(`Added "${product.title}" to favorites`);
+    } else {
+      successToast(`Removed "${product.title}" from favorites`);
+    }
+  }
 
   if (isLoading) return <div>Loading product...</div>;
 
@@ -121,7 +152,10 @@ export default function Product({ onAddToCart }: ProductPageProps) {
 
       <div className="flex justify-between gap-4 max-h-16">
         <AddToCartBtn onClick={handleAddToCartClick} />
-        <AddToFavoritesBtn />
+        <AddToFavoritesBtn
+          isFavorite={favorite}
+          onClick={handleToggleFavorite}
+        />
       </div>
 
       <div className="flex flex-col md:self-end">
@@ -173,10 +207,23 @@ function AddToCartBtn({ onClick }: AddToCartBtnProps) {
   );
 }
 
-function AddToFavoritesBtn() {
+type AddToFavoritesBtnProps = {
+  isFavorite: boolean;
+  onClick: () => void;
+};
+
+function AddToFavoritesBtn({ isFavorite, onClick }: AddToFavoritesBtnProps) {
   return (
-    <button className="flex items-center gap-2 p-4 transition-transform bg-white rounded-md shadow-lg hover:scale-105">
-      <FavoriteBorderIcon className="text-pink-300" />
+    <button
+      onClick={onClick}
+      className="flex items-center gap-2 p-4 transition-transform bg-white rounded-md shadow-lg hover:scale-105"
+      aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+    >
+      {isFavorite ? (
+        <FavoriteIcon className="text-pink-300" />
+      ) : (
+        <FavoriteBorderIcon className="text-pink-300" />
+      )}
     </button>
   );
 }
