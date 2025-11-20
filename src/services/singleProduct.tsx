@@ -2,6 +2,8 @@ import StarRating from 'components/StarRating';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { successToast } from 'utils/toast';
+
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -20,7 +22,7 @@ type SingleProduct = {
     url: string;
     alt: string;
   };
-  tags: String[];
+  tags: string[];
   reviews: Review[];
 };
 
@@ -31,7 +33,16 @@ type Review = {
   rating: number;
 };
 
-export default function Product() {
+type ProductPageProps = {
+  onAddToCart: (item: {
+    id: string;
+    title: string;
+    price: number;
+    image: string;
+  }) => void;
+};
+
+export default function Product({ onAddToCart }: ProductPageProps) {
   const [product, setProduct] = useState<SingleProduct | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -65,10 +76,26 @@ export default function Product() {
     return <div>Product not found.</div>;
   }
 
-  console.log(product);
+  function handleAddToCartClick() {
+    if (!product) return;
+
+    const priceToUse =
+      product.discountedPrice < product.price
+        ? product.discountedPrice
+        : product.price;
+
+    onAddToCart({
+      id: product.id,
+      title: product.title,
+      price: priceToUse,
+      image: product.image.url,
+    });
+
+    successToast(`Added 1 "${product.title}" to cart`);
+  }
 
   return (
-    <section className="flex flex-col gap-8 md:grid md:grid-cols-2 max-w-6xl mx-auto">
+    <section className="flex flex-col max-w-6xl gap-8 mx-auto md:grid md:grid-cols-2">
       <div className="md:col-span-2">
         <h1 className="text-4xl">{product.title}</h1>
         <StarRating rating={product.rating} />
@@ -77,28 +104,28 @@ export default function Product() {
       <img
         src={product.image.url}
         alt={product.image.alt}
-        className="h-80 w-full object-cover rounded md:row-span-3"
+        className="object-cover w-full rounded h-80 md:row-span-3"
       />
 
       <div className="flex items-center gap-4">
         {product.price === product.discountedPrice ? (
-          <p className="font-bold text-2xl">{product.price} NOK</p>
+          <p className="text-2xl font-bold">{product.price} NOK</p>
         ) : (
-          <p className="font-bold text-2xl">{product.discountedPrice} NOK</p>
+          <p className="text-2xl font-bold">{product.discountedPrice} NOK</p>
         )}
 
         {product.discountedPrice < product.price ? (
-          <p className="line-through text-sm">({product.price} NOK)</p>
+          <p className="text-sm line-through">({product.price} NOK)</p>
         ) : null}
       </div>
 
       <div className="flex justify-between gap-4 max-h-16">
-        <AddToCartBtn />
+        <AddToCartBtn onClick={handleAddToCartClick} />
         <AddToFavoritesBtn />
       </div>
 
       <div className="flex flex-col md:self-end">
-        <h2 className="font-bold pb-2">Product details:</h2>
+        <h2 className="pb-2 font-bold">Product details:</h2>
         <p>{product.description}</p>
 
         <div className="flex gap-4 mt-4">
@@ -112,7 +139,7 @@ export default function Product() {
       </div>
 
       <div className="md:col-span-2">
-        <h2 className="font-bold pb-2">Reviews:</h2>
+        <h2 className="pb-2 font-bold">Reviews:</h2>
         <ul className="flex flex-col gap-4">
           {product.reviews.map((review) => (
             <li key={review.id} className="pb-2 border-b">
@@ -129,11 +156,16 @@ export default function Product() {
   );
 }
 
-function AddToCartBtn() {
+type AddToCartBtnProps = {
+  onClick: () => void;
+};
+
+function AddToCartBtn({ onClick }: AddToCartBtnProps) {
   return (
     <button
       className="flex items-center gap-2 rounded-md text-lg p-4 shadow-lg transition-transform hover:scale-105 bg-[#C6F6BA] font-bold w-full justify-center"
       aria-label="Add product to cart"
+      onClick={onClick}
     >
       <LocalMallOutlinedIcon />
       Add to cart
@@ -143,7 +175,7 @@ function AddToCartBtn() {
 
 function AddToFavoritesBtn() {
   return (
-    <button className="bg-white flex items-center gap-2 p-4 shadow-lg rounded-md transition-transform hover:scale-105">
+    <button className="flex items-center gap-2 p-4 transition-transform bg-white rounded-md shadow-lg hover:scale-105">
       <FavoriteBorderIcon className="text-pink-300" />
     </button>
   );

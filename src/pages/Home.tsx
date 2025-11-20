@@ -1,26 +1,26 @@
-import { useState } from 'react';
 import HeroSection from 'components/HeroSection';
 import Products from 'services/allProducts';
-import { CartItem, addToCart } from 'services/storage';
 
-export default function HomePage() {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+type HomePageProps = {
+  onAddToCart: (item: {
+    id: string;
+    title: string;
+    price: number;
+    image: string;
+  }) => void;
+};
 
-  function handleAddToCart(item: Omit<CartItem, 'qty'>) {
-    const updated = addToCart(item);
-    setCartItems(updated);
-  }
-
+export default function HomePage({ onAddToCart }: HomePageProps) {
   return (
     <>
       <HeroSection />
 
       <section>
-        <h1 id="products" className="text-4xl my-8 max-w-6xl mx-auto">
+        <h1 id="products" className="max-w-6xl mx-auto my-8 text-4xl">
           Our Products
         </h1>
 
-        <Products onAddToCart={handleAddToCart} />
+        <Products onAddToCart={onAddToCart} />
       </section>
     </>
   );

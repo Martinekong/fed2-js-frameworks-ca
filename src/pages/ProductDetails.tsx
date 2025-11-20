@@ -1,9 +1,18 @@
 import Product from 'services/singleProduct';
 
-export default function ProductPage() {
+type ProductPageProps = {
+  onAddToCart: (item: {
+    id: string;
+    title: string;
+    price: number;
+    image: string;
+  }) => void;
+};
+
+export default function ProductPage({ onAddToCart }: ProductPageProps) {
   return (
     <>
-      <Product />
+      <Product onAddToCart={onAddToCart} />
     </>
   );
 }

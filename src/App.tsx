@@ -9,7 +9,12 @@ import CartPanel from 'components/CartPanel';
 import FavoritesPanel from 'components/FavoritesPanel';
 import Footer from 'components/Footer';
 
-import { CartItem, getCart, updateCartQuantity } from 'services/storage';
+import {
+  CartItem,
+  getCart,
+  updateCartQuantity,
+  addToCart,
+} from 'services/storage';
 
 import HomePage from 'pages/Home';
 import ProductPage from 'pages/ProductDetails';
@@ -23,6 +28,11 @@ function App() {
   useEffect(() => {
     setCartItems(getCart());
   }, []);
+
+  function handleAddToCart(item: Omit<CartItem, 'qty'>) {
+    const updated = addToCart(item);
+    setCartItems(updated);
+  }
 
   function handleChangeCartQty(id: string, delta: number) {
     const updated = updateCartQuantity(id, delta);
@@ -42,7 +52,7 @@ function App() {
   const cartCount = cartItems.reduce((sum, item) => sum + item.qty, 0);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex flex-col min-h-screen">
       <Toaster position="bottom-right" />
       <Navbar
         onOpenCart={() => setOpenPanel('cart')}
@@ -70,8 +80,14 @@ function App() {
 
       <main className="flex-grow">
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/product/:id" element={<ProductPage />} />
+          <Route
+            path="/"
+            element={<HomePage onAddToCart={handleAddToCart} />}
+          />
+          <Route
+            path="/product/:id"
+            element={<ProductPage onAddToCart={handleAddToCart} />}
+          />
         </Routes>
       </main>
 
