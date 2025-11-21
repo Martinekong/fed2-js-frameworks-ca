@@ -86,7 +86,7 @@ export default function SearchBar({ className = '' }: SearchBarProps) {
           placeholder="Search..."
           aria-label="Search products"
           onChange={(e) => setQuery(e.target.value)}
-          className="w-full p-2 mt-4 border rounded-xl md:mt-0 md:order-2"
+          className="w-full p-2 mt-4 border rounded-md md:mt-0 md:order-2"
         />
 
         <SearchIcon

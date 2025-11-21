@@ -11,7 +11,7 @@ export default function OrderSuccessPage() {
   const name = state?.name;
 
   return (
-    <section className="max-w-2xl px-4 py-12 mx-auto text-center">
+    <section className="max-w-2xl py-12 mx-auto text-center md:px-4">
       <h1 className="mb-4 text-4xl font-semibold">Order confirmed 🎉</h1>
 
       {name && <p className="mb-2 text-lg">Thank you, {name}!</p>}

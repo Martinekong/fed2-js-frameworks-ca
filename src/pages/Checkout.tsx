@@ -69,7 +69,7 @@ export default function CheckoutPage({
 
   if (items.length === 0) {
     return (
-      <section className="max-w-3xl px-4 py-8 mx-auto">
+      <section className="max-w-3xl py-8 mx-auto md:px-4">
         <h1 className="mb-4 text-4xl font-semibold">Checkout</h1>
         <p className="mb-4 text-gray-600">
           Your cart is empty. Add some products before checking out.
@@ -85,7 +85,7 @@ export default function CheckoutPage({
   }
 
   return (
-    <section className="grid max-w-5xl grid-cols-1 gap-8 px-4 py-8 mx-auto md:grid-cols-[2fr,1.5fr]">
+    <section className="grid max-w-5xl grid-cols-1 gap-8 md:px-4 py-8 mx-auto md:grid-cols-[2fr,1.5fr]">
       <div>
         <h1 className="mb-4 text-4xl font-semibold">Checkout</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -191,7 +191,7 @@ export default function CheckoutPage({
         </form>
       </div>
 
-      <aside className="p-4 border rounded-lg bg-gray-50">
+      <aside className="p-4 border rounded-md bg-gray-50">
         <h2 className="mb-3 text-lg font-semibold">Order summary</h2>
         <ul className="mb-4 space-y-3 overflow-y-auto max-h-64">
           {items.map((item) => (

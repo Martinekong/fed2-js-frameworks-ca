@@ -138,7 +138,7 @@ export default function Product({ onAddToCart }: ProductPageProps) {
       <img
         src={product.image.url}
         alt={product.image.alt || product.title}
-        className="object-cover w-full rounded h-80 md:row-span-3"
+        className="object-cover w-full rounded-md h-80 md:row-span-3"
       />
 
       <div className="flex items-center gap-4">
@@ -168,7 +168,7 @@ export default function Product({ onAddToCart }: ProductPageProps) {
         <div className="flex gap-4 mt-4">
           <p>Tags:</p>
           {product.tags.map((tag) => (
-            <p className="p-1 bg-[#C6F6BA] opacity-70 rounded-sm text-sm shadow-sm">
+            <p className="p-1 bg-[#C6F6BA] opacity-70 rounded-md text-sm shadow-sm">
               {tag}
             </p>
           ))}
