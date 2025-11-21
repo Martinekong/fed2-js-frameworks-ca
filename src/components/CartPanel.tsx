@@ -68,6 +68,12 @@ export default function CartPanel({
         <span>Total:</span>
         <span>{total.toFixed(2)} NOK</span>
       </div>
+
+      <Link to="/checkout" onClick={onClose} className="block">
+        <button className="w-full py-3 mt-2 text-sm font-semibold text-white bg-black rounded-md hover:bg-gray-900">
+          Go to checkout
+        </button>
+      </Link>
     </div>
   );
 }

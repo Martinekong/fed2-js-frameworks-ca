@@ -14,10 +14,13 @@ import {
   getCart,
   updateCartQuantity,
   addToCart,
+  clearCart,
 } from 'services/storage';
 
 import HomePage from 'pages/Home';
 import ProductPage from 'pages/ProductDetails';
+import CheckoutPage from 'pages/Checkout';
+import OrderSuccessPage from 'pages/OrderSuccess';
 
 type Panel = 'cart' | 'favorite' | null;
 
@@ -47,6 +50,11 @@ function App() {
     } else {
       successToast(`Removed 1 ${item.title}`);
     }
+  }
+
+  function handleClearCart() {
+    const updated = clearCart();
+    setCartItems(updated);
   }
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.qty, 0);
@@ -88,6 +96,13 @@ function App() {
             path="/product/:id"
             element={<ProductPage onAddToCart={handleAddToCart} />}
           />
+          <Route
+            path="/checkout"
+            element={
+              <CheckoutPage items={cartItems} onClearCart={handleClearCart} />
+            }
+          />
+          <Route path="/order-success" element={<OrderSuccessPage />} />
         </Routes>
       </main>
 

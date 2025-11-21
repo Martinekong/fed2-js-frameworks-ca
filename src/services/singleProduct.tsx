@@ -131,7 +131,7 @@ export default function Product({ onAddToCart }: ProductPageProps) {
   return (
     <section className="flex flex-col max-w-6xl gap-8 mx-auto md:grid md:grid-cols-2">
       <div className="md:col-span-2">
-        <h1 className="text-4xl">{product.title}</h1>
+        <h1 className="text-4xl font-semibold">{product.title}</h1>
         <StarRating rating={product.rating} />
       </div>
 
@@ -153,7 +153,7 @@ export default function Product({ onAddToCart }: ProductPageProps) {
         ) : null}
       </div>
 
-      <div className="flex justify-between gap-4 max-h-16">
+      <div className="flex justify-between gap-4 max-h-14">
         <AddToCartBtn onClick={handleAddToCartClick} />
         <AddToFavoritesBtn
           isFavorite={favorite}

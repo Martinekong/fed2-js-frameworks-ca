@@ -95,3 +95,9 @@ export function updateCartQuantity(id: string, delta: number): CartItem[] {
   localStorage.setItem(CART_KEY, JSON.stringify(cart));
   return cart;
 }
+
+export function clearCart(): CartItem[] {
+  const empty: CartItem[] = [];
+  localStorage.setItem(CART_KEY, JSON.stringify(empty));
+  return empty;
+}

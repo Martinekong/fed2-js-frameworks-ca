@@ -36,8 +36,6 @@ export default function SearchBar({ className = '' }: SearchBarProps) {
     loadProducts();
   }, []);
 
-  console.log(products);
-
   useEffect(() => {
     if (!query.trim()) {
       setFiltered([]);
