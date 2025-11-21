@@ -11,11 +11,18 @@ type NavbarProps = {
 
 function Navbar({ onOpenCart, onOpenFavorite, cartCount }: NavbarProps) {
   return (
-    <nav className="grid items-center justify-between grid-cols-2 px-8 pt-8 md:grid-cols-4">
+    <nav className="grid items-center justify-between grid-cols-2 gap-4 px-8 pt-8 md:grid-cols-4">
       <Link to={`/`} className="text-3xl tracking-wider uppercase">
         varivo
       </Link>
-      <div className="flex gap-4 justify-self-end md:order-3">
+
+      <div className="flex items-center max-w-full gap-4 justify-self-end md:order-3">
+        <Link
+          to="/contact"
+          className="relative py-4 text-sm font-medium after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px] after:w-0 after:bg-black after:-translate-x-1/2 after:transition-all after:duration-300 hover:after:w-full"
+        >
+          Contact
+        </Link>
         <HeaderButton
           name="cart"
           background="bg-[#C6F6BA]"

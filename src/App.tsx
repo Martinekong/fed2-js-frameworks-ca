@@ -21,6 +21,7 @@ import HomePage from 'pages/Home';
 import ProductPage from 'pages/ProductDetails';
 import CheckoutPage from 'pages/Checkout';
 import OrderSuccessPage from 'pages/OrderSuccess';
+import ContactPage from 'pages/Contact';
 
 type Panel = 'cart' | 'favorite' | null;
 
@@ -103,6 +104,7 @@ function App() {
             }
           />
           <Route path="/order-success" element={<OrderSuccessPage />} />
+          <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </main>
 

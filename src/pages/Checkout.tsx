@@ -1,7 +1,7 @@
-// src/pages/Checkout.tsx
-import { useState } from 'react';
+import { FormEvent, ChangeEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CartItem } from 'services/storage';
+import { errorToast, successToast } from 'utils/toast';
 
 type CheckoutPageProps = {
   items: CartItem[];
@@ -35,35 +35,44 @@ export default function CheckoutPage({
   const total = items.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   function handleChange(
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
     const { name, value } = event.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: undefined }));
   }
 
   function validate() {
     const newErrors: Partial<FormData> = {};
 
     if (!form.fullName.trim()) newErrors.fullName = 'Full name is required';
+
     if (!form.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(form.email)) {
       newErrors.email = 'Enter a valid email';
     }
+
     if (!form.address.trim()) newErrors.address = 'Address is required';
+
     if (!form.postalCode.trim())
       newErrors.postalCode = 'Postal code is required';
+
     if (!form.city.trim()) newErrors.city = 'City is required';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }
 
-  function handleSubmit(event: React.FormEvent) {
+  function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    if (!validate()) return;
+    if (!validate()) {
+      errorToast('Please fix the highlighted errors.');
+      return;
+    }
 
     onClearCart();
+    successToast('Your order has been sent.');
     navigate('/order-success', { state: { name: form.fullName } });
   }
 
@@ -102,7 +111,11 @@ export default function CheckoutPage({
               type="text"
               value={form.fullName}
               onChange={handleChange}
-              className="w-full p-2 border rounded-md"
+              className={`w-full p-2 border rounded-md outline-none focus:ring-2 ${
+                errors.fullName
+                  ? 'border-red-500 focus:ring-red-200'
+                  : 'border-gray-300 focus:ring-gray-200'
+              }`}
             />
             {errors.fullName && (
               <p className="mt-1 text-xs text-red-600">{errors.fullName}</p>
@@ -119,7 +132,11 @@ export default function CheckoutPage({
               type="email"
               value={form.email}
               onChange={handleChange}
-              className="w-full p-2 border rounded-md"
+              className={`w-full p-2 border rounded-md outline-none focus:ring-2 ${
+                errors.email
+                  ? 'border-red-500 focus:ring-red-200'
+                  : 'border-gray-300 focus:ring-gray-200'
+              }`}
             />
             {errors.email && (
               <p className="mt-1 text-xs text-red-600">{errors.email}</p>
@@ -136,7 +153,11 @@ export default function CheckoutPage({
               type="text"
               value={form.address}
               onChange={handleChange}
-              className="w-full p-2 border rounded-md"
+              className={`w-full p-2 border rounded-md outline-none focus:ring-2 ${
+                errors.address
+                  ? 'border-red-500 focus:ring-red-200'
+                  : 'border-gray-300 focus:ring-gray-200'
+              }`}
             />
             {errors.address && (
               <p className="mt-1 text-xs text-red-600">{errors.address}</p>
@@ -157,7 +178,11 @@ export default function CheckoutPage({
                 type="text"
                 value={form.postalCode}
                 onChange={handleChange}
-                className="w-full p-2 border rounded-md"
+                className={`w-full p-2 border rounded-md outline-none focus:ring-2 ${
+                  errors.postalCode
+                    ? 'border-red-500 focus:ring-red-200'
+                    : 'border-gray-300 focus:ring-gray-200'
+                }`}
               />
               {errors.postalCode && (
                 <p className="mt-1 text-xs text-red-600">{errors.postalCode}</p>
@@ -174,7 +199,11 @@ export default function CheckoutPage({
                 type="text"
                 value={form.city}
                 onChange={handleChange}
-                className="w-full p-2 border rounded-md"
+                className={`w-full p-2 border rounded-md outline-none focus:ring-2 ${
+                  errors.city
+                    ? 'border-red-500 focus:ring-red-200'
+                    : 'border-gray-300 focus:ring-gray-200'
+                }`}
               />
               {errors.city && (
                 <p className="mt-1 text-xs text-red-600">{errors.city}</p>
