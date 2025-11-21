@@ -2,12 +2,14 @@ import StarRating from 'components/StarRating';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { successToast } from 'utils/toast';
+import { errorToast, successToast } from 'utils/toast';
 
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { isFavorite, toggleFavorite } from 'services/storage';
+import LoadingMessage from 'components/LoadingMessage';
+import ErrorMessage from 'components/ErrorMessage';
 
 const BASE_URL = 'https://v2.api.noroff.dev/online-shop';
 
@@ -59,13 +61,22 @@ export default function Product({ onAddToCart }: ProductPageProps) {
         setIsError(false);
         setIsLoading(true);
         const response = await fetch(`${BASE_URL}/${id}`);
+
+        if (response.status === 400) {
+          setProduct(null);
+          return;
+        }
+        if (!response.ok) {
+          throw new Error(`Error status: ${response.status}`);
+        }
         const json = await response.json();
         setProduct(json.data);
-        setIsLoading(false);
       } catch (error) {
         setIsError(true);
+        errorToast('Error loading product');
+        console.error(error);
+      } finally {
         setIsLoading(false);
-        console.log(error);
       }
     }
 
@@ -102,12 +113,16 @@ export default function Product({ onAddToCart }: ProductPageProps) {
     }
   }
 
-  if (isLoading) return <div>Loading product...</div>;
+  if (isLoading) return <LoadingMessage />;
 
-  if (isError) return <div>Error loading product</div>;
+  if (isError) return <ErrorMessage />;
 
   if (!product) {
-    return <div>Product not found.</div>;
+    return (
+      <div className="max-w-6xl mx-auto text-red-700">
+        No product found with that ID.
+      </div>
+    );
   }
 
   function handleAddToCartClick() {

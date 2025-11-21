@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import ProductCard from 'components/ProductCard';
+import { errorToast } from 'utils/toast';
+import ErrorMessage from 'components/ErrorMessage';
+import LoadingMessage from 'components/LoadingMessage';
 
 const url = 'https://v2.api.noroff.dev/online-shop';
 
@@ -38,22 +41,26 @@ export default function Products({ onAddToCart }: ProductsProps) {
         setIsError(false);
         setIsLoading(true);
         const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Error status: ${response.status}`);
+        }
         const json = await response.json();
         setProducts(json.data);
-        setIsLoading(false);
       } catch (error) {
-        setIsLoading(false);
         setIsError(true);
-        console.log(error);
+        errorToast('Error loading products');
+        console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     }
 
     getData();
   }, []);
 
-  if (isLoading) return <div>Loading products...</div>;
+  if (isLoading) return <LoadingMessage />;
 
-  if (isError) return <div>Error loading products</div>;
+  if (isError) return <ErrorMessage />;
 
   return (
     <div className="grid max-w-6xl grid-cols-1 gap-8 mx-auto sm:grid-cols-2 lg:grid-cols-3">
