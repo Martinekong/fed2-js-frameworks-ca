@@ -28,9 +28,10 @@ type ProductsProps = {
       alt: string;
     };
   }) => void;
+  sortOption: string;
 };
 
-export default function Products({ onAddToCart }: ProductsProps) {
+export default function Products({ onAddToCart, sortOption }: ProductsProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -62,9 +63,24 @@ export default function Products({ onAddToCart }: ProductsProps) {
 
   if (isError) return <ErrorMessage />;
 
+  const sortedProducts = [...products].sort((a, b) => {
+    switch (sortOption) {
+      case 'name-asc':
+        return a.title.localeCompare(b.title);
+      case 'name-desc':
+        return b.title.localeCompare(a.title);
+      case 'price-asc':
+        return a.price - b.price;
+      case 'price-desc':
+        return b.price - a.price;
+      default:
+        return 0;
+    }
+  });
+
   return (
     <div className="grid max-w-6xl grid-cols-1 gap-8 mx-auto sm:grid-cols-2 lg:grid-cols-3">
-      {products.map((product) => (
+      {sortedProducts.map((product) => (
         <ProductCard
           key={product.id}
           id={product.id}

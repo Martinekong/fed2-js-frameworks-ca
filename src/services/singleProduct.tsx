@@ -201,17 +201,22 @@ export default function Product({ onAddToCart }: ProductPageProps) {
 
       <div className="md:col-span-2">
         <h2 className="pb-2 font-bold">Reviews:</h2>
-        <ul className="flex flex-col gap-4">
-          {product.reviews.map((review) => (
-            <li key={review.id} className="pb-2 border-b">
-              <div className="flex justify-between mb-2">
-                <p>{review.username}</p>
-                <StarRating rating={review.rating} />
-              </div>
-              <p>{review.description}</p>
-            </li>
-          ))}
-        </ul>
+
+        {product.reviews.length === 0 ? (
+          <p className="text-gray-500 ">This product has no reviews</p>
+        ) : (
+          <ul className="flex flex-col gap-4">
+            {product.reviews.map((review) => (
+              <li key={review.id} className="pb-2 border-b">
+                <div className="flex justify-between mb-2">
+                  <p>{review.username}</p>
+                  <StarRating rating={review.rating} />
+                </div>
+                <p>{review.description}</p>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </section>
   );
