@@ -6,6 +6,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import { isFavorite, toggleFavorite } from 'services/storage';
+import DiscountSticker from './DiscountSticker';
 
 type ProductCardProps = {
   id: string;
@@ -71,11 +72,18 @@ export default function ProductCard({
     <>
       <div className="relative transition rounded-md shadow-md cursor-pointer hover:shadow-lg">
         <Link to={`/product/${id}`}>
-          <img
-            src={image.url}
-            alt={image.alt || title}
-            className="object-cover w-full h-48 rounded-md"
-          />
+          <div className="relative">
+            <img
+              src={image.url}
+              alt={image.alt || title}
+              className="object-cover w-full h-48 rounded-md"
+            />
+            <DiscountSticker
+              price={price}
+              discountedPrice={discountedPrice}
+              className="bottom-2 right-2"
+            />
+          </div>
 
           <div className="grid items-center grid-cols-3 p-4">
             <h2 className="col-span-2 text-lg font-semibold">{title}</h2>

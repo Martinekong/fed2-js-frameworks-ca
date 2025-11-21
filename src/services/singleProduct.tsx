@@ -10,6 +10,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { isFavorite, toggleFavorite } from 'services/storage';
 import LoadingMessage from 'components/LoadingMessage';
 import ErrorMessage from 'components/ErrorMessage';
+import DiscountSticker from 'components/DiscountSticker';
 
 const BASE_URL = 'https://v2.api.noroff.dev/online-shop';
 
@@ -150,11 +151,19 @@ export default function Product({ onAddToCart }: ProductPageProps) {
         <StarRating rating={product.rating} />
       </div>
 
-      <img
-        src={product.image.url}
-        alt={product.image.alt || product.title}
-        className="object-cover w-full rounded-md h-80 md:row-span-3"
-      />
+      <div className="relative md:row-span-3">
+        <img
+          src={product.image.url}
+          alt={product.image.alt || product.title}
+          className="object-cover w-full rounded-md h-80"
+        />
+
+        <DiscountSticker
+          price={product.price}
+          discountedPrice={product.discountedPrice}
+          className="top-4 right-4"
+        />
+      </div>
 
       <div className="flex items-center gap-4">
         {product.price === product.discountedPrice ? (
