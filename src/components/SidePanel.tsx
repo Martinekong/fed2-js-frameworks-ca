@@ -41,12 +41,12 @@ export default function SidePanel({
         aria-modal="true"
         aria-label={title}
       >
-        <header className="flex items-center justify-between border-b px-5 py-4">
+        <header className="flex items-center justify-between px-5 py-4 border-b">
           <h2 className="text-lg font-semibold">{title}</h2>
           <button
             onClick={onClose}
-            className="rounded-md py-2 px-4 hover:bg-gray-100"
-            aria-label="Close"
+            className="px-4 py-2 rounded-md hover:bg-gray-100"
+            aria-label="Close side panel"
           >
             x
           </button>

@@ -47,6 +47,7 @@ export default function CartPanel({
               <div className="flex self-end gap-2">
                 <button
                   onClick={() => onChangeQty(item.id, -1)}
+                  aria-label={`Remove 1 ${item.title}`}
                   className="w-6 h-6 leading-5 text-center border rounded hover:bg-gray-100"
                 >
                   -
@@ -54,6 +55,7 @@ export default function CartPanel({
                 <span>{item.qty}</span>
                 <button
                   onClick={() => onChangeQty(item.id, +1)}
+                  aria-label={`Add 1 ${item.title}`}
                   className="w-6 h-6 leading-5 text-center border rounded hover:bg-gray-100"
                 >
                   +
