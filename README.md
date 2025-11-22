@@ -1,6 +1,6 @@
 # Varivo Online Shop - JavaScript Frameworks Course Assignment
 
-![Varivo screenshot]()
+![Varivo screenshot](varivo-screenshot.webp)
 
 **Varivo** is an online shop application where users can browse products, add items to the cart, toggle favorites, and use search and sorting features. It includes full cart functionality, a checkout flow, and contact form validation.
 The application is built with **React, TypeScript, and TailwindCSS**, and interacts with the **Noroff Online Shop API**.
@@ -55,8 +55,8 @@ npm start
 
 ## Deployment
 
-This site is deployed using ...
-🔗 [Varivo website]()
+This site is deployed using Netlify:
+🔗 [Varivo website](https://varivo.netlify.app/)
 
 ## Contact
 
