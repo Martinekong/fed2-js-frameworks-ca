@@ -15,7 +15,7 @@ type HomePageProps = {
 };
 
 export default function HomePage({ onAddToCart }: HomePageProps) {
-  const [sortOption, setSortOption] = useState('name-asc');
+  const [sortOption, setSortOption] = useState('none');
 
   return (
     <>

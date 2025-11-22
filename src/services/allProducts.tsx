@@ -65,6 +65,8 @@ export default function Products({ onAddToCart, sortOption }: ProductsProps) {
 
   const sortedProducts = [...products].sort((a, b) => {
     switch (sortOption) {
+      case 'none':
+        return 0;
       case 'name-asc':
         return a.title.localeCompare(b.title);
       case 'name-desc':
