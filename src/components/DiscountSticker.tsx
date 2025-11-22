@@ -1,7 +1,7 @@
 type DiscountStickerProps = {
   price: number;
   discountedPrice: number | null;
-  className: string;
+  className?: string;
 };
 
 export default function DiscountSticker({
